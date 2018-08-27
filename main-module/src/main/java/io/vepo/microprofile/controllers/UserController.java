@@ -17,9 +17,14 @@ import org.jnosql.artemis.DatabaseType;
 import io.vepo.microprofile.model.User;
 import io.vepo.microprofile.model.UserRepository;
 
+import org.slf4j.Logger;
+
 @ApplicationScoped
 @Path("/user")
 public class UserController {
+
+	@Inject
+	private Logger logger;
 
 	@Inject
 	@Database(DatabaseType.DOCUMENT)
@@ -34,6 +39,7 @@ public class UserController {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public User createUser(User newUser) {
+		logger.info("Creating users {}", newUser);
 		return userRepository.save(newUser);
 	}
 }
